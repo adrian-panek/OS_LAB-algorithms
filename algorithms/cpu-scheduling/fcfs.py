@@ -26,7 +26,10 @@ waiting_time = []
 for i in range(len(sorted_processes)):
     waiting_time.append(int(turn_around_time[i]) - int(sorted_processes[i][0]))
 
+print(sorted_processes)
 
 for i in range(len(sorted_processes)):
+    print(f"Process: {i+1}")
     print(f"CT: {completion_time[i]}")
     print(f"WT: {waiting_time[i]}")
+    print("-------------")
