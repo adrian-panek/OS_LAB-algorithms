@@ -1,4 +1,6 @@
-import numpy
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
+import csv
 
 #funkcja przyznająca drugą szansę stronie
 def assign_second_chance(x, arr, second_chance, frame_number):
@@ -30,20 +32,23 @@ def find_fault_pages(data, frame_number):
     page_fault_count = 0
     arr = [0]*frame_number
     #lista wszystkich "drugich szans" w danym przykładzie
-    second_chance = [False] * frame_number
-    #ładowanie danych z pliku csv
-    
+    second_chance = [False] * frame_number    
     for i in range(len(data)):
         x = data[i]
         if not assign_second_chance(x, arr, second_chance, frame_number):
             pointer = update_memory(x, arr, second_chance, frame_number, pointer)
             page_fault_count+=1
     print(f"Total page faults were: {page_fault_count}")
+    data = []
 
-data = []
-with open("../../data/page-replacement/test_data.csv") as file:
-    data = numpy.loadtxt(file, delimiter=",")
-    
-frame_number = 3
 
-find_fault_pages(data, frame_number)
+if __name__ == "__main__":
+    frame_number = 5
+    data = []
+    for i in range(0,2):
+        with open(f"../../data/page-replacement/test_data{i}.csv") as csvfile:
+            filereader = csv.reader(csvfile, delimiter=",")
+            for item in filereader:
+                data = item
+                find_fault_pages(data, frame_number)
+                    
