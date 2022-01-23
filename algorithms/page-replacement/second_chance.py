@@ -38,17 +38,25 @@ def find_fault_pages(data, frame_number):
         if not assign_second_chance(x, arr, second_chance, frame_number):
             pointer = update_memory(x, arr, second_chance, frame_number, pointer)
             page_fault_count+=1
-    print(f"Total page faults were: {page_fault_count}")
     data = []
+    return page_fault_count
 
 
 if __name__ == "__main__":
     frame_number = 5
+    output = ""
     data = []
-    for i in range(0,2):
-        with open(f"../../data/page-replacement/test_data{i}.csv") as csvfile:
+    total_page_fault = 0
+    for i in range(0,100):
+        with open(f"../../data/page-replacement/page-replacement-data{i}.csv") as csvfile:
             filereader = csv.reader(csvfile, delimiter=",")
             for item in filereader:
                 data = item
-                find_fault_pages(data, frame_number)
+                total_page_fault += find_fault_pages(data, frame_number)
+                output += (f"Page faults were: {find_fault_pages(data,frame_number)} \n")
+                output += f"Page fault count: {total_page_fault} \n"
+                file = open("../../output/page-replacement/second-chance-output.txt", "w+")
+                file.write(output)
+                file.close()
+                
                     

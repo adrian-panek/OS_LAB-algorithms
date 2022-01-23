@@ -2,6 +2,7 @@ from queue import Queue
 import csv
   
 def find_fault_data(data, n, frame_number):
+    total_page_fault = 0
     set = []
     #symulacja kolejki
     queue = Queue() 
@@ -24,7 +25,6 @@ def find_fault_data(data, n, frame_number):
             if (data[i] not in set):
                 # Usunięcie pierwszej strony z kolejki
                 val = queue.queue[0] 
-                print(val)
                 queue.get() 
                 # Remove the indexes page 
                 set.remove(val) 
@@ -34,19 +34,27 @@ def find_fault_data(data, n, frame_number):
                 # w kolejce 
                 queue.put(data[i]) 
                 page_fault_count += 1
-    print(f"Total page faults were: {page_fault_count}")
+    return page_fault_count
   
 if __name__ == '__main__':
     data = []
+    output = ""
     frame_number = 5
+    total_page_fault = 0
     #zmienna, która wczytuje każdy z plików po kolei
-    for i in range(0,2):
-        with open(f"../../data/page-replacement/test_data{i}.csv") as csvfile:
+    for i in range(0,10):
+        with open(f"../../data/page-replacement/page-replacement-data{i}.csv") as csvfile:
             filereader = csv.reader(csvfile, delimiter=",")
             for item in filereader:
                 data = item
                 n = len(data)
                 #wywołanie funkcji, która zlicza brakujące strony w iteracji
-                find_fault_data(data, n, frame_number)
+                total_page_fault += find_fault_data(data, n, frame_number)
+                output += (f"Page faults were: {find_fault_data(data, n, frame_number)} \n")
+                output += f"Page fault count: {total_page_fault} \n"
+                file = open("../../output/page-replacement/fifo-output.txt", "w+")
+                file.write(output)
+                file.close()
+                print()
     
     

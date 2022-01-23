@@ -6,7 +6,7 @@ processes = []
 total_waiting_time = 0
 total_turnaround_time = 0
 
-for i in range(0,25):
+for i in range(0,100):
     with open(f"../../data/cpu-scheduling/cpu-schedule-data{i}.csv") as csvfile:
         filereader = csv.reader(csvfile, delimiter=",")
         for row in filereader:
@@ -30,12 +30,17 @@ for i in range(len(sorted_processes)):
     waiting_time.append(int(turn_around_time[i]) - int(sorted_processes[i][0]))
     total_waiting_time += waiting_time[i]
 
+output = ""
+
 for i in range(len(sorted_processes)):
-    print("---------------")
-    print(f"Process {i+1}, CT: {completion_time[i]},  WT: {waiting_time[i]}, TAT: {turn_around_time[i]}")
+    output += ("--------------- \n")
+    output += (f"Process {i+1}, CT: {completion_time[i]},  WT: {waiting_time[i]}, TAT: {turn_around_time[i]} \n")
 
 avg_turnaround_time = total_turnaround_time / len(sorted_processes)
 avg_waiting_time = total_waiting_time / len(sorted_processes)
 
-print(f"AVG TAT: {avg_turnaround_time}")
-print(f"AVG WT: {avg_waiting_time}")
+file = open("../../output/cpu-scheduling/fcfs-output.txt", "w+")
+file.write(output)
+file.write(f"AVG TAT: {avg_turnaround_time} \n")
+file.write(f"AVG WT: {avg_waiting_time}")
+file.close()

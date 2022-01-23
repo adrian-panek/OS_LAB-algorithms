@@ -59,13 +59,16 @@ while (completed != n):
     else:
         current_time+=1
 
-
+output = ""
 for i in range(n):
-    print("---------------")
-    print(f"Process {i+1}, CT: {processes[i].completion_time}, TAT: {processes[i].turnaround_time}, WT: {processes[i].waiting_time}")
+    output += ("--------------- \n")
+    output += (f"Process {i+1}, CT: {processes[i].completion_time}, TAT: {processes[i].turnaround_time}, WT: {processes[i].waiting_time} \n")
 
 avg_turnaround_time = total_turnaround_time / n
 avg_waiting_time = total_waiting_time / n
 
-print(f"AVG TAT: {avg_turnaround_time}")
-print(f"AVG WT: {avg_waiting_time}")
+file = open("../../output/cpu-scheduling/sjf-output.txt", "w+")
+file.write(output)
+file.write(f"AVG TAT: {avg_turnaround_time} \n")
+file.write(f"AVG WT: {avg_waiting_time}")
+file.close()
