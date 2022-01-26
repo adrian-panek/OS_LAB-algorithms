@@ -1,6 +1,4 @@
-PL:
-
-Systemy operacyjne - projekt
+PL: Systemy operacyjne - projekt
 
 Struktura katalogów w folderze głównym
 
@@ -38,4 +36,5 @@ verions as dataclasses module might cause problems
 `python3.7 algorithms/cpu-scheduling/sjf.py`
 
 While running algorithms make sure to be in a folder that contains the algorithm as it won't import datasets correctly
+-----------------------------------------------------------
 
