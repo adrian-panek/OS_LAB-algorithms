@@ -3,7 +3,7 @@
 import csv
 
 #funkcja przyznająca drugą szansę stronie
-def assign_second_chance(x, arr, second_chance, frame_number):
+def assign_second_chance(x, arr, second_chance, frame_number) -> bool:
     for i in range(frame_number):
         #sprawdzenie, czy strona już jest w pamięci
         if arr[i] == x:
@@ -15,7 +15,7 @@ def assign_second_chance(x, arr, second_chance, frame_number):
     return False
 
 #dodanie nowej strony do pamięci
-def update_memory(x, arr, second_chance, frame_number, pointer):
+def update_memory(x, arr, second_chance, frame_number, pointer) -> int:
     while True:
         #szukanie strony, która nie ma drugiej szansy
         if not second_chance[pointer]:
@@ -26,7 +26,7 @@ def update_memory(x, arr, second_chance, frame_number, pointer):
         second_chance[pointer] = False
         pointer = (pointer + 1) % frame_number
 
-def find_fault_pages(data, frame_number):
+def find_fault_pages(data, frame_number) -> int:
     pointer = 0
     #licznik brakujących stron
     page_fault_count = 0
@@ -38,12 +38,11 @@ def find_fault_pages(data, frame_number):
         if not assign_second_chance(x, arr, second_chance, frame_number):
             pointer = update_memory(x, arr, second_chance, frame_number, pointer)
             page_fault_count+=1
-    data = []
     return page_fault_count
 
 
 if __name__ == "__main__":
-    frame_number = 5
+    frame_number = 3
     output = ""
     data = []
     total_page_fault = 0
@@ -53,10 +52,11 @@ if __name__ == "__main__":
             for item in filereader:
                 data = item
                 total_page_fault += find_fault_pages(data, frame_number)
-                output += (f"Page faults were: {find_fault_pages(data,frame_number)} \n")
-                output += f"Page fault count: {total_page_fault} \n"
-                file = open("../../output/page-replacement/second-chance-output.txt", "w+")
-                file.write(output)
-                file.close()
-                
+                output += (f"Page faults were: {find_fault_pages(data, frame_number)} \n")
+                output += (f"Total page fault count: {total_page_fault} \n")
+
+output += (f"Average page fault: {int(total_page_fault)/(100*100)}")
+file = open("../../output/page-replacement/second-chance-output-3.txt", "w+")
+file.write(output)
+file.close()
                     

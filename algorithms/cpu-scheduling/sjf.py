@@ -14,7 +14,7 @@ class SJF:
     is_completed: bool = False
 
 processes = []
-for i in range(0,25):
+for i in range(0,100):
     with open(f"../../data/cpu-scheduling/cpu-schedule-data{i}.csv") as csvfile:
         filereader = csv.reader(csvfile, delimiter=",")
         for row in filereader:
